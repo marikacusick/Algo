@@ -30,11 +30,12 @@ class Graph:
     neigh_list = []
     for edge in self.graph:
         if node in edge:
-            for i in range(2):
-                if edge[i] != node:
-                    neigh = edge[i]
-            weight = edge[2]
+            (node1,node2, weight) = edge
+            if node1!= node:
+                neigh = node1
+            else:
+                neigh = node2
             temp_tuple = tuple((neigh, weight))
             neigh_list.append(temp_tuple)
-
+  
     return neigh_list
