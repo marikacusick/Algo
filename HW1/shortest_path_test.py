@@ -13,6 +13,7 @@ try:
   print("Testing with adjacency list graph...")
   adjacency_graph = AdjacencyGraph()
   adjacency_graph.add_edge('a', 'b', 1)
+  
   if shortest_path(adjacency_graph, 'a', 'b') != (['a','b'], 1):
     print "Your code ran, but did NOT output the shortest distance from 'a' to 'b' when your adjacency list graph had the edge ('a', 'b', 1) added."
   else:
@@ -24,7 +25,17 @@ except:
 try:
   print("Testing with edge list graph...")
   edge_graph = EdgeGraph()
-  edge_graph.add_edge('a', 'b', 1) 
+  edge_graph.add_edge('a', 'b', 1)
+  edge_graph.add_edge('b', 'c', 2)
+  edge_graph.add_edge('c', 'd', 3)
+  edge_graph.add_edge('a', 'f', 1)
+  edge_graph.add_edge('f', 'd', 1)
+  edge_graph.add_edge('f', 'e', 3)
+  edge_graph.add_edge('e', 'm', 4)
+  edge_graph.add_edge('m', 'd', 6)
+  hi = shortest_path(edge_graph, 'a','d')
+  print (hi)
+
   if shortest_path(edge_graph, 'a', 'b') != (['a','b'], 1):
     print "Your code ran, but did NOT output the shortest distance from 'a' to 'b' when your edge list graph had the edge ('a', 'b', 1) added."
   else:
