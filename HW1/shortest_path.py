@@ -1,5 +1,7 @@
 # Please see instructions.txt for the description of this problem.
 from exceptions import NotImplementedError
+import heapq
+
 
 def shortest_path(graph, source, target):
     # `graph` is an object that provides a get_neighbors(node) method that returns
@@ -31,7 +33,8 @@ def shortest_path(graph, source, target):
     
     while priority:
         
-        (current, cost) = priority.pop()
+        (current, cost) = heapq.heappop(priority)
+        #(current, cost) = priority.pop()
         
         if current not in seen:
             seen.add(current)
@@ -63,7 +66,8 @@ def shortest_path(graph, source, target):
                 if prev is None or alt < prev:
                     distances[neigh_node] = alt
                     previous[neigh_node] = current
-                    priority.append((neigh_node, alt))
+                    heapq.heappush(priority, (neigh_node, alt))
+                    #priority.append((neigh_node, alt))
 
 
 
