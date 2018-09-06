@@ -35,6 +35,19 @@ try:
   edge_graph.add_edge('m', 'd', 6)
   hi = shortest_path(edge_graph, 'a','d')
   print (hi)
+  
+  print("Testing with edge list graph...")
+  adj_graph = AdjacencyGraph()
+  adj_graph.add_edge('a', 'b', 1)
+  adj_graph.add_edge('b', 'c', 2)
+  adj_graph.add_edge('c', 'd', 3)
+  adj_graph.add_edge('a', 'f', 1)
+  adj_graph.add_edge('f', 'd', 1)
+  adj_graph.add_edge('f', 'e', 3)
+  adj_graph.add_edge('e', 'm', 4)
+  adj_graph.add_edge('m', 'd', 6)
+  adj_short_path = shortest_path(adj_graph, 'a','d')
+  print (adj_short_path)
 
   if shortest_path(edge_graph, 'a', 'b') != (['a','b'], 1):
     print "Your code ran, but did NOT output the shortest distance from 'a' to 'b' when your edge list graph had the edge ('a', 'b', 1) added."
