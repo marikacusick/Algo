@@ -36,7 +36,7 @@ try:
   hi = shortest_path(edge_graph, 'a','d')
   print (hi)
   
-  print("Testing with edge list graph...")
+  print("Testing with adjacency list graph...")
   adj_graph = AdjacencyGraph()
   adj_graph.add_edge('a', 'b', 1)
   adj_graph.add_edge('b', 'c', 2)
