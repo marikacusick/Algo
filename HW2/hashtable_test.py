@@ -5,10 +5,13 @@ from hashtable_chaining import HashTable as HashTableChaining
 from hashtable_linear_probing import HashTable as HashTableProbing
 
 for (name, HashTable) in [("chaining", HashTableChaining), ("linear probing", HashTableProbing)]:
+#for (name, HashTable) in [("linear probing", HashTableProbing)]:
     table = HashTable()
     table.insert("example_key", "example_value")
+    print ("inserted the value")
     if table.get("example_key") != "example_value":
         print("%s hash table did not return example value"%name)
     table.remove("example_key")
+    print ("removed the value")
     if table.size() != 0:
         print("%s hash table had non-zero size"%name)
