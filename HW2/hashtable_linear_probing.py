@@ -42,9 +42,6 @@ class HashTable:
     if float(self.size())/float(self.array_size) > self.load_factor:
         self._resize_array()
 
-    #there needs to be a way to resize the array here after a certain number of additions
-    
-    #raise NotImplementedError()
         
   # Returns the value associated with `key` in the hash table, or None if no
   # such value is found.
@@ -70,13 +67,10 @@ class HashTable:
         val = self._get_array().get(pos)[1]
         self._get_array().set(pos, None)
         return val
-    
-    #raise NotImplementedError()
 
   # Returns the number of elements in the hash table.
   def size(self):
     return self.item_count
-  #raise NotImplementedError()
 
   # Internal helper function for resizing the hash table's array once the ratio
   # of stored mappings to array size exceeds the specified load factor.
@@ -90,8 +84,7 @@ class HashTable:
         if old_arr.get(i) is not None:
             self._get_array().set(i, old_arr.get(i))
 
-  
-    #raise NotImplementedError()
+
 
   # Internal helper function for accessing the array underlying the hash table.
   def _get_array(self):
