@@ -19,27 +19,32 @@ class HashTable:
   def insert(self, key, value):
     hash_pos = cs5112_hash1(key) % self.array_size
     
-    
     val = tuple((key, value))
     
     #if there is no item in this hash position, then set the value to that position
     if self._get_array().get(hash_pos) == None:
+        print ("inserted" + str(val) + " into position " + str(hash_pos))
         self._get_array().set(hash_pos,val)
     
     #if there is another value in the hash position, we must rehash in order to get to the next position
     else:
         print ("Collision")
-        next_spot = rehash(hash_pos, self.array_size)
+        next_spot = self.rehash(hash_pos, self.array_size)
+        print ("trying " + str(next_spot))
     
         while self._get_array().get(next_spot) != None:
-            next_spot = rehash(next_spot, self.array_size)
-
+            next_spot = self.rehash(next_spot, self.array_size)
+            print ("trying " + str(next_spot))
+        
         if self._get_array().get(next_spot)== None:
-            self._get_array().set(hash_pos, val)
-
+            print ("inserted" + str(val) + " into position " + str(next_spot))
+            self._get_array().set(next_spot, val)
+    
     self.item_count = self.item_count + 1
+    print ("added a value, count is now " + str(self.item_count))
     
     if float(self.size())/float(self.array_size) > self.load_factor:
+        print ("need to resize array")
         self._resize_array()
 
         
@@ -66,6 +71,8 @@ class HashTable:
     else:
         val = self._get_array().get(pos)[1]
         self._get_array().set(pos, None)
+        self.item_count = self.item_count - 1
+        print ("removed item, the count is now " + str(self.item_count))
         return val
 
   # Returns the number of elements in the hash table.
@@ -77,13 +84,15 @@ class HashTable:
   def _resize_array(self):
   
     new_length = self.array_size*2
-    #self.item_count = 0
+    self.item_count = 0
     old_arr = self._get_array()
     self.array = FixedSizeArray(new_length)
-    for i in range(self.array_size):
+    self.array_size = new_length
+    
+    for i in range(old_arr.size):
         if old_arr.get(i) is not None:
-            self._get_array().set(i, old_arr.get(i))
-
+            val = old_arr.get(i)
+            self.insert(val[0], val[1])
 
 
   # Internal helper function for accessing the array underlying the hash table.
@@ -92,7 +101,7 @@ class HashTable:
     return self.array
   
 #Internal helper to rehash
-  def rehash(old_pos, size):
+  def rehash(self, old_pos, size):
       return (old_pos + 1) % size
 
 # helper function to get the index

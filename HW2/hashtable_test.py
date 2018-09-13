@@ -8,10 +8,32 @@ for (name, HashTable) in [("chaining", HashTableChaining), ("linear probing", Ha
 #for (name, HashTable) in [("linear probing", HashTableProbing)]:
     table = HashTable()
     table.insert("example_key", "example_value")
-    print ("inserted the value")
+
+    table.insert("A", "dog")
+    table.insert("B", "cat")
+    table.insert("A" , "giraffe")
+    table.insert("C", "fly")
+    table.insert("D", "mosquito")
+    table.insert("E", "horse")
+    table.insert("F", "eagle")
+    table.insert("G", "bird")
+    table.insert("H", "bison")
+    table.insert("I", "boar")
+    table.insert("J", "butterfly")
+    table.insert("K", "ant")
+    table.insert("L", "anaconda")
+    table.insert("M", "bear")
+    table.insert("N", "chicken")
+    table.insert("O", "dolphin")
+
+
     if table.get("example_key") != "example_value":
         print("%s hash table did not return example value"%name)
+
+#this returns dog, is there a way to return giraffe? Do you have to make sure that the keys are unique?
+    print (table.get("A"))
+
     table.remove("example_key")
-    print ("removed the value")
     if table.size() != 0:
         print("%s hash table had non-zero size"%name)
+        print ("table size is " + str(table.size()))
