@@ -120,10 +120,13 @@ class HashTable:
     if (content_in_slot == None):
         return content_in_slot   
     else:
-        for existing_key_val in content_in_slot:
-            if (existing_key_val[0] == key):
-                return existing_key_val[1]
-            
+        cur_node = content_in_slot.head
+        
+        while(cur_node != None):
+            if (cur_node.get_value()[0] == key):
+                return cur_node.get_value()[1]
+            cur_node = cur_node.get_next()
+        
         return None # return None if key not found at this position
 
   # Removes the `(key, value)` pair matching the given `key` from the map, if it
