@@ -31,7 +31,8 @@ for (name, HashTable) in [("chaining", HashTableChaining), ("linear probing", Ha
         print("%s hash table did not return example value"%name)
 
 #this returns dog, is there a way to return giraffe? Do you have to make sure that the keys are unique?
-    print (table.get("A"))
+    print (table.get("A")) #should return giraffe
+    print(table.get("Z")) # should return None
 
     table.remove("example_key")
     if table.size() != 0:

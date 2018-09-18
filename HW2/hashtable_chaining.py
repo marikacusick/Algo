@@ -37,14 +37,70 @@ class HashTable:
   # Note: Neither `key` nor `value` may be None (an exception will be raised)
   def insert(self, key, value):
     # YOUR CODE HERE
-    raise NotImplementedError()
+    if (key == None or value == None):
+        raise NotImplementedError()
+   
+    hash_slot = cs5112_hash1(key) % self.array_size
+    print("Hash Position = " + str(hash_slot))
+    key_val = tuple((key, value))
+    
+    content_in_slot =  self._get_array().get(hash_slot) ## IS THIS A POINTER OR CAN I MODIFY DIRECTLY??
+    
+    print(key_val)
+    #if there is no item in this hash position, then set the value to that position
+    if content_in_slot == None:
+        print ("inserted " + str(key_val) + " into position " + str(hash_slot))
+        nested_list = []
+        nested_list.append(key_val)
+        
+        self._get_array().set(hash_slot,nested_list)
+    
+    #if it's not None at position, then explore the nested list at that position
+        # if key is already in the nested list, replace that list index with new (key, value)
+        # if not, append (key, value) to nested list
+    else:        
+        idx_of_key = -1
+        for idx, existing_key_val in enumerate(content_in_slot):
+            if (existing_key_val[0] == key):
+                idx_of_key = idx
+               
+        if (idx_of_key != -1):
+            print("Replaced " + str(content_in_slot[idx_of_key]) + " with " + str(key_val) + " in nested list at position "+str(hash_slot)) 
+            content_in_slot[idx_of_key] = key_val
+        else:
+            print("Appending " + str(key_val) + " to list at position " + str(hash_slot))
+            content_in_slot.append(key_val)
+            
+        self._get_array().set(hash_slot,content_in_slot)       
+        
+    
+    self.item_count = self.item_count + 1
+    #print ("added a value, count is now " + str(self.item_count))
+    
+    #if float(self.size())/float(self.array_size) > self.load_factor:
+        #print ("need to resize array")
+        #self._resize_array()
+    
 
   # Returns the value associated with `key` in the hash table, or None if no
   # such value is found.
   # Note: `key` may not be None (an exception will be raised)
   def get(self, key):
     # YOUR CODE HERE
-    raise NotImplementedError()
+    if (key == None):
+        raise NotImplementedError()
+    
+    hash_slot = cs5112_hash1(key) % self.array_size
+    content_in_slot = self._get_array().get(hash_slot)
+    
+    if (content_in_slot == None):
+        return content_in_slot   
+    else:
+        for existing_key_val in content_in_slot:
+            if (existing_key_val[0] == key):
+                return existing_key_val[1]
+            
+        return None # return None if key not found at this position
 
   # Removes the `(key, value)` pair matching the given `key` from the map, if it
   # exists. If such a pair exists in the map, the return value will be the value
