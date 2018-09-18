@@ -21,6 +21,24 @@ class SLLNode:
   def get_value(self):
     return self.value
 
+class SingleLinkedList:  
+    def __init__(self):
+        "constructor to initiate this object"
+
+        self.head = None
+        self.tail = None
+        return
+    def add_list_item(self, item):
+        "add an item at the end of the list"
+
+        if self.head is None:
+            self.head = item
+        else:
+            self.tail.next = item
+
+        self.tail = item
+
+        return
 # An implementation of a hash table that uses chaining to handle collisions.
 class HashTable:
   def __init__(self, initial_size=10, load_factor=.75):
@@ -50,31 +68,37 @@ class HashTable:
     #if there is no item in this hash position, then set the value to that position
     if content_in_slot == None:
         print ("inserted " + str(key_val) + " into position " + str(hash_slot))
-        nested_list = []
-        nested_list.append(key_val)
-        
+        nested_list = SingleLinkedList()
+        new_node = SLLNode(key_val)
+        nested_list.head = new_node
+                
         self._get_array().set(hash_slot,nested_list)
     
-    #if it's not None at position, then explore the nested list at that position
-        # if key is already in the nested list, replace that list index with new (key, value)
-        # if not, append (key, value) to nested list
-    else:        
-        idx_of_key = -1
-        for idx, existing_key_val in enumerate(content_in_slot):
-            if (existing_key_val[0] == key):
-                idx_of_key = idx
-               
-        if (idx_of_key != -1):
-            print("Replaced " + str(content_in_slot[idx_of_key]) + " with " + str(key_val) + " in nested list at position "+str(hash_slot)) 
-            content_in_slot[idx_of_key] = key_val
-        else:
-            print("Appending " + str(key_val) + " to list at position " + str(hash_slot))
-            content_in_slot.append(key_val)
+    #if it's not None at position, then explore the linked list at that position
+        # if key is already in the linked list, replace that node with new (key, value)
+        # if not, append (key, value) to linked list
+    else:                
+        cur_node = content_in_slot.head
+        while (cur_node != None):
+            if (cur_node.get_value()[0] == key):
+                print("Replaced " + str(cur_node.get_value()) + " with " + str(key_val) + " in nested list at position "+str(hash_slot)) 
+                cur_node.set_value(key_val)
+                break
+            if (cur_node.get_next() == None):
+                new_node = SLLNode(key_val)
+                cur_node.set_next(new_node)
+                print("Appending " + str(key_val) + " to list at position " + str(hash_slot))
+                break
             
-        self._get_array().set(hash_slot,content_in_slot)       
+            cur_node = cur_node.get_next()
+        self._get_array().set(hash_slot,content_in_slot) 
+            #cur_node = content_in_slot
+    self.item_count = self.item_count + 1
+
+      
         
     
-    self.item_count = self.item_count + 1
+
     #print ("added a value, count is now " + str(self.item_count))
     
     #if float(self.size())/float(self.array_size) > self.load_factor:
@@ -108,7 +132,27 @@ class HashTable:
   # Note: `key` may not be None (an exception will be raised)
   def remove(self, key):
     # YOUR CODE HERE
-    raise NotImplementedError()
+    if (key == None):
+        raise NotImplementedError()
+    
+    hash_slot = cs5112_hash1(key) % self.array_size
+    content_in_slot = self._get_array().get(hash_slot)
+    
+    if (content_in_slot == None):
+        return content_in_slot
+    else:
+        idx_of_key = -1
+        for idx, existing_key_val in enumerate(content_in_slot):
+            if (existing_key_val[0] == key):
+                idx_of_key = idx
+                break
+        if (idx_of_key != -1):
+            print("Removing " + str(content_in_slot[idx_of_key]) + " from nested list at position "+str(hash_slot)) 
+            content_in_slot[idx_of_key] = key_val
+        else:
+            return None
+            
+        self._get_array().set(hash_slot,content_in_slot)
 
   # Returns the number of elements in the hash table.
   def size(self):
