@@ -19,12 +19,13 @@ for (name, HashTable) in [("chaining", HashTableChaining), ("linear probing", Ha
     table.insert("G", "bird")
     table.insert("H", "bison")
     table.insert("I", "boar")
-    table.insert("J", "butterfly")
-    table.insert("K", "ant")
-    table.insert("L", "anaconda")
-    table.insert("M", "bear")
-    table.insert("N", "chicken")
-    table.insert("O", "dolphin")
+    table.insert("I", "butterfly")
+    #table.insert("J", "butterfly")
+    #table.insert("K", "ant")
+    #table.insert("L", "anaconda")
+    #table.insert("M", "bear")
+    #table.insert("N", "chicken")
+    #table.insert("O", "dolphin")
 
 
     if table.get("example_key") != "example_value":

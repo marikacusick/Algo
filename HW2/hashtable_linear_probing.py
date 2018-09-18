@@ -17,35 +17,65 @@ class HashTable:
   # previously associated with `key`.
   # Note: Neither `key` nor `value` may be None (an exception will be raised)
   def insert(self, key, value):
-    hash_pos = cs5112_hash1(key) % self.array_size
+      
+    if (key== None or value == None):
+        raise Exception ("key or value cannot be none")
     
+    hash_pos = cs5112_hash1(key) % self.array_size
     val = tuple((key, value))
     
+    content = self._get_array().get(hash_pos)
+    
     #if there is no item in this hash position, then set the value to that position
-    if self._get_array().get(hash_pos) == None:
+    if content == None:
         print ("inserted" + str(val) + " into position " + str(hash_pos))
         self._get_array().set(hash_pos,val)
     
-    #if there is another value in the hash position, we must rehash in order to get to the next position
-    else:
-        print ("Collision")
-        next_spot = self.rehash(hash_pos, self.array_size)
-        print ("trying " + str(next_spot))
-    
-        while self._get_array().get(next_spot) != None:
-            next_spot = self.rehash(next_spot, self.array_size)
-            print ("trying " + str(next_spot))
+        self.item_count = self.item_count + 1
+        print ("added a value, count is now " + str(self.item_count))
         
-        if self._get_array().get(next_spot)== None:
-            print ("inserted" + str(val) + " into position " + str(next_spot))
-            self._get_array().set(next_spot, val)
+        if float(self.size())/float(self.array_size) > self.load_factor:
+            print ("need to resize array")
+            self._resize_array()
     
-    self.item_count = self.item_count + 1
-    print ("added a value, count is now " + str(self.item_count))
+    else:
+        
+        #does this key already exisit in the array?
+        idx_of_key = -1
+        for i in range(self.array_size):
+            tup = (self._get_array().get(i))
+            if tup is not None:
+                if tup[0] == key:
+                    idx_of_key = i
     
-    if float(self.size())/float(self.array_size) > self.load_factor:
-        print ("need to resize array")
-        self._resize_array()
+        #if this key exists, replace it with this value
+        if (idx_of_key != -1):
+            print ("Replaced " + str(self._get_array().get(idx_of_key)[1] + " with " +
+                                     str(value) + " into position " + str(idx_of_key)))
+            self._get_array().set(idx_of_key, val)
+            print ("did not need to add to array, so the size is: " + str(self.item_count))
+        
+        #if not, there is a collision, and we need to check the next possible position
+        else:
+        
+            print ("Collision")
+            next_spot = self.rehash(hash_pos, self.array_size)
+            print ("trying " + str(next_spot))
+    
+            while self._get_array().get(next_spot) != None:
+                next_spot = self.rehash(next_spot, self.array_size)
+                print ("trying " + str(next_spot))
+        
+            if self._get_array().get(next_spot)== None:
+                print ("inserted" + str(val) + " into position " + str(next_spot))
+                self._get_array().set(next_spot, val)
+    
+            self.item_count = self.item_count + 1
+            print ("added a value, count is now " + str(self.item_count))
+    
+            if float(self.size())/float(self.array_size) > self.load_factor:
+                print ("need to resize array")
+                self._resize_array()
 
         
   # Returns the value associated with `key` in the hash table, or None if no
@@ -114,7 +144,7 @@ class HashTable:
       if self._get_array().get(hash_pos)[0]!=key:
           pos_save = hash_pos
           while self._get_array().get(hash_pos)[0]!=key:
-              hash_pos = rehash(hash_pos, self.array_size)
+              hash_pos = self.rehash(hash_pos, self.array_size)
               if self._get_array().get(hash_pos) is None:
                   return None
               if hash_pos == pos_save:
