@@ -71,7 +71,7 @@ class HashTable:
         nested_list = SingleLinkedList()
         new_node = SLLNode(key_val)
         nested_list.head = new_node
-                
+        self.item_count = self.item_count + 1        
         self._get_array().set(hash_slot,nested_list)
     
     #if it's not None at position, then explore the linked list at that position
@@ -87,13 +87,15 @@ class HashTable:
             if (cur_node.get_next() == None):
                 new_node = SLLNode(key_val)
                 cur_node.set_next(new_node)
+                
+                self.item_count = self.item_count + 1
                 print("Appending " + str(key_val) + " to list at position " + str(hash_slot))
                 break
             
             cur_node = cur_node.get_next()
         self._get_array().set(hash_slot,content_in_slot) 
             #cur_node = content_in_slot
-    self.item_count = self.item_count + 1
+    
 
       
         
@@ -144,29 +146,44 @@ class HashTable:
     if (content_in_slot == None):
         return content_in_slot
     else:
-        idx_of_key = -1
-        for idx, existing_key_val in enumerate(content_in_slot):
-            if (existing_key_val[0] == key):
-                idx_of_key = idx
-                break
-        if (idx_of_key != -1):
-            print("Removing " + str(content_in_slot[idx_of_key]) + " from nested list at position "+str(hash_slot)) 
-            content_in_slot[idx_of_key] = key_val
-        else:
-            return None
+        cur_node = content_in_slot.head
+        prev_node = None
+
+        while (cur_node != None):
+            if (cur_node.get_value()[0] == key):
+                if (prev_node != None):
+                    prev_node.set_next(cur_node.get_next())  ## HOW DO I ALTER THE ORIGINAL LINKED LIST?
+                else:
+                    content_in_slot.head = cur_node.get_next()
+                
+                self.item_count = self.item_count - 1
+                self._get_array().set(hash_slot,content_in_slot)
+                return cur_node.get_value()[1]
             
-        self._get_array().set(hash_slot,content_in_slot)
+            prev_node = cur_node
+            cur_node = cur_node.get_next()
+
+        return None
+        
+        
 
   # Returns the number of elements in the hash table.
-  def size(self):
-    # YOUR CODE HERE
-    raise NotImplementedError()
+  def size(self):  
+    return self.item_count
 
   # Internal helper function for resizing the hash table's array once the ratio
   # of stored mappings to array size exceeds the specified load factor.
   def _resize_array(self):
-    # YOUR CODE HERE
-    raise NotImplementedError()
+    new_length = self.array_size*2
+    self.item_count = 0
+    old_arr = self._get_array()
+    self.array = FixedSizeArray(new_length)
+    self.array_size = new_length
+    
+    for i in range(old_arr.size):
+        if old_arr.get(i) is not None:
+            val = old_arr.get(i)
+            self.insert(val[0], val[1])
 
   # Internal helper function for accessing the array underlying the hash table.
   def _get_array(self):
