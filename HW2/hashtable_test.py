@@ -28,6 +28,7 @@ for (name, HashTable) in [("chaining", HashTableChaining), ("linear probing", Ha
     print(table.size() == 15)
 
 
+
 #this returns dog, is there a way to return giraffe? Do you have to make sure that the keys are unique?
     print (table.get("A")) #should return giraffe
        
