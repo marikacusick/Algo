@@ -6,6 +6,8 @@ from hashtable_linear_probing import HashTable as HashTableProbing
 
 for (name, HashTable) in [("chaining", HashTableChaining), ("linear probing", HashTableProbing)]:
 #for (name, HashTable) in [("linear probing", HashTableProbing)]:
+
+    print ("Starting with ") + str(name)
     table = HashTable()
 
     table.insert("A", "dog")
@@ -25,8 +27,9 @@ for (name, HashTable) in [("chaining", HashTableChaining), ("linear probing", Ha
     table.insert("M", "bear")
     table.insert("N", "chicken")
     table.insert("O", "dolphin")
+    table.insert(None, "hello")
+    table.insert('None', "hello")
     print(table.size() == 15)
-
 
 
 #this returns dog, is there a way to return giraffe? Do you have to make sure that the keys are unique?

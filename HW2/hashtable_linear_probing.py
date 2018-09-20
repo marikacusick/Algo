@@ -19,7 +19,8 @@ class HashTable:
   def insert(self, key, value):
       
     if (key== None or value == None):
-        raise Exception ("key or value cannot be none")
+        print("key or value cannot be none")
+        return
     
     hash_pos = cs5112_hash1(key) % self.array_size
     val = tuple((key, value))
@@ -83,6 +84,10 @@ class HashTable:
   # Note: `key` may not be None (an exception will be raised)
   def get(self, key):
       
+    if (key == None):
+        print ("key cannot be none")
+        return
+      
     pos = self.find(key)
     if pos == None:
         return None
@@ -94,7 +99,11 @@ class HashTable:
   # that was removed. If no such value exists, the method will return None.
   # Note: `key` may not be None (an exception will be raised)
   def remove(self, key):
-  
+      
+    if (key == None):
+        print ("key cannot be none")
+        return
+      
     pos = self.find(key)
     if pos == None:
           return None
@@ -123,7 +132,6 @@ class HashTable:
         if old_arr.get(i) is not None:
             val = old_arr.get(i)
             self.insert(val[0], val[1])
-
 
   # Internal helper function for accessing the array underlying the hash table.
   def _get_array(self):
