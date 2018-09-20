@@ -93,19 +93,12 @@ class HashTable:
                 break
             
             cur_node = cur_node.get_next()
-        self._get_array().set(hash_slot,content_in_slot) 
-            #cur_node = content_in_slot
-    
-
-      
         
+        self._get_array().set(hash_slot,content_in_slot) 
     
-
-    #print ("added a value, count is now " + str(self.item_count))
-    
-    #if float(self.size())/float(self.array_size) > self.load_factor:
-        #print ("need to resize array")
-        #self._resize_array()
+    if float(self.size())/float(self.array_size) > self.load_factor:
+        print ("need to resize array")
+        self._resize_array()
     
 
   # Returns the value associated with `key` in the hash table, or None if no
@@ -183,7 +176,14 @@ class HashTable:
     for i in range(old_arr.size):
         if old_arr.get(i) is not None:
             val = old_arr.get(i)
-            self.insert(val[0], val[1])
+            cur_node = val.head
+            while(cur_node != None):
+                kv = cur_node.get_value()
+                k = kv[0]
+                v = kv[1]
+                self.insert(k, v)
+                cur_node = cur_node.get_next()
+            
 
   # Internal helper function for accessing the array underlying the hash table.
   def _get_array(self):
