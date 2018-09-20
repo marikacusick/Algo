@@ -26,7 +26,6 @@ class BloomFilter:
     
     return
     
-    raise NotImplementedError
     
 
   # Returns False if the given element is was definitely not added to the
@@ -39,4 +38,4 @@ class BloomFilter:
     
     return(self.array.get(index_h1) and self.array.get(index_h2) and self.array.get(index_h3))
 
-    raise NotImplementedError
+   

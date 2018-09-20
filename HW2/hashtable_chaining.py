@@ -56,8 +56,7 @@ class HashTable:
   def insert(self, key, value):
     # YOUR CODE HERE
     if (key == None or value == None):
-        print ("key or value cannot be none")
-        return
+        raise Exception("key or value cannot be none")
    
     hash_slot = cs5112_hash1(key) % self.array_size
     print("Hash Position = " + str(hash_slot))
@@ -108,9 +107,8 @@ class HashTable:
   def get(self, key):
     # YOUR CODE HERE
     if (key == None):
-        print ("key cannot be none")
-        return
-    
+        raise Exception ("key cannot be none")
+
     hash_slot = cs5112_hash1(key) % self.array_size
     content_in_slot = self._get_array().get(hash_slot)
     
@@ -133,8 +131,7 @@ class HashTable:
   def remove(self, key):
     # YOUR CODE HERE
     if (key == None):
-        print ("key cannot be none")
-        return
+        raise Exception ("key cannot be none")
     
     hash_slot = cs5112_hash1(key) % self.array_size
     content_in_slot = self._get_array().get(hash_slot)

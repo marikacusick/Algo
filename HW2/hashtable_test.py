@@ -18,6 +18,7 @@ for (name, HashTable) in [("chaining", HashTableChaining), ("linear probing", Ha
     table.insert("D", "mosquito")
     table.insert("E", "horse")
     table.insert("F", "eagle")
+    #table.insert("None", 's')
     table.insert("G", "bird")
     table.insert("H", "bison")
     table.insert("I", "boar")
@@ -27,10 +28,11 @@ for (name, HashTable) in [("chaining", HashTableChaining), ("linear probing", Ha
     table.insert("M", "bear")
     table.insert("N", "chicken")
     table.insert("O", "dolphin")
+    #table.insert("None", 'stop')
     table.insert(None, "hello")
     table.insert("None", 's')
     table.insert('s', 'None')
-    table.remove('None', 'a')
+    #table.remove('None', 'a')
     print(table.size() == 15)
 
 
