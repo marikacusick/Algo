@@ -17,6 +17,14 @@ class BoyerMooreMajority:
   def add_next_element(self, element):
     assert(element is not None)
     #YOUR CODE HERE
+    if (self.counter == 0):
+        self.guess = element
+        self.counter = 1
+    else:
+        if (self.guess == element):
+            self.counter += 1
+        else:
+            self.counter -= 1
 
   # Gives the best guess of which of the elements seen so far make up the
   # majority of the elements in set of elements. If a majority element exists,
@@ -24,4 +32,4 @@ class BoyerMooreMajority:
   # about the output.
   def get_majority(self):
     #YOUR CODE HERE
-    pass
+    return self.guess 
