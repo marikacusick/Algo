@@ -20,12 +20,22 @@ class HuffmanTree:
   def __init__(self, symbol_list):
     assert(len(symbol_list) >= 2)
     # YOUR CODE HERE
-    print("Input: ")
-    print(symbol_list)
-    sorted_list = sorted(symbol_list, key=lambda x: (x[1], x[0]))
+
+    def custom_sort(symbol_weight_pair):
+        primary_sorter = symbol_weight_pair[1] #always sort by weight first
+        if(isinstance(symbol_weight_pair[0], self.TreeNode)):
+            secondary_sorter = symbol_weight_pair[0].min_element
+        else:
+            secondary_sorter = symbol_weight_pair[0]
+        
+        return (primary_sorter, secondary_sorter)
+    
+    sorted_list = sorted(symbol_list, key=lambda x: custom_sort(x))
     while (len(sorted_list) > 1):
+        
         first_elem = sorted_list.pop(0)
         second_elem = sorted_list.pop(0)
+        
                 
         ### CONVERT ELEMENTS INTO NODES IF THEY AREN'T ALREADY
         if(isinstance(first_elem[0], self.TreeNode)):
@@ -51,11 +61,7 @@ class HuffmanTree:
         elif (second_elem_weight < first_elem_weight): #THINK THIS IS UNNECESSARY BECAUSE THE LIST IS SORTED
             left_node = second_elem_node
             right_node = first_elem_node
-        else: # HANDLE TIES IN WEIGHTS
-            #if it's a leaf node, the symbol for comparison is the symbol...if it's a tree node, it's the min_element
-            #first_elem_symbol = first_elem_node.min_element if first_elem_node.symbol == None else first_elem_node.symbol
-            #second_elem_symbol = second_elem_node.min_element if second_elem_node.symbol == None else second_elem_node.symbol
-            
+        else: # HANDLE TIES IN WEIGHTS            
             if (first_elem_node.min_element < second_elem_node.min_element):
                 left_node = first_elem_node
                 right_node = second_elem_node
@@ -83,7 +89,7 @@ class HuffmanTree:
         sorted_list.append(parent_tuple)
         
         ## RE-SORT LIST
-        sorted_list = sorted(sorted_list, key=lambda x: x[1])
+        sorted_list = sorted(sorted_list, key=lambda x: custom_sort(x))
         
     self.root = sorted_list.pop(0)[0] #Root is equal to the final remaining treenode    
 
@@ -122,4 +128,13 @@ print("Left Child's Left Child Symbol:")
 print(h.root.left.left.symbol)
 print("Left Child's Right Child Symbol:")
 print(h.root.left.right.symbol)
+
+
+l = "Generated case number 0;j,e,F,h,Z,x,w,Y,X,q,A,i,I,l,z,O,v,o,V,G,n,E,T,B,L;13,10,9,15,5,8,1,7,5,2,12,6,14,3,8,7,5,5,5,9,12,9,14,2,5;((((EF)(G(LV)))(((XZ)e)((ov)A)))(((n(iO))(jI))((T(Y(l(q(wB)))))(h(xz)))));;;0111000011101111010010100101111111010;AEhxiizY"
+l = l.strip()
+(testname, symbols, weights, tree, encode_input, encode_output, decode_input, decode_output) = l.split(";")
+decode_output = None if decode_output == '!' else decode_output
+symbols = symbols.split(",")
+weights = [int(w) for w in weights.split(",")]
+h = HuffmanTree(list(zip(symbols, weights)))
 '''
