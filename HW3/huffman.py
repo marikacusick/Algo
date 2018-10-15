@@ -19,7 +19,6 @@ class HuffmanTree:
   # the unnormalized probabilitiy of that symbol appearing.
   def __init__(self, symbol_list):
     assert(len(symbol_list) >= 2)
-    # YOUR CODE HERE
 
     def custom_sort(symbol_weight_pair):
         primary_sorter = symbol_weight_pair[1] #always sort by weight first
@@ -32,6 +31,8 @@ class HuffmanTree:
     
     sorted_list = sorted(symbol_list, key=lambda x: custom_sort(x))
     while (len(sorted_list) > 1):
+        
+        #print (sorted_list)
         
         first_elem = sorted_list.pop(0)
         second_elem = sorted_list.pop(0)
@@ -97,16 +98,63 @@ class HuffmanTree:
   # symbol/weight list provided.
   def encode(self, s):
     assert(s is not None)
-    # YOUR CODE HERE
+
+    root = self.root
+    this_dict = dict()
+    
+    def recurse_code(root, string, this_dict):
+
+        if root.left == None and root.right == None and root.symbol!=None:
+            
+            this_dict[root.symbol] = string
+            
+            return
+  
+  
+        recurse_code(root.left, string + "0", this_dict)
+        recurse_code(root.right, string + "1", this_dict)
+              
+    recurse_code(root, "", this_dict)
+  
+    print (this_dict)
+    output = ""
+    for char in s:
+        output = output + this_dict[char]
+    
+    
+    return output
+  
 
   # Decodes a string of bits into a string of characters using the
   # symbol/weight list provided.
   def decode(self,s):
-    assert(s is not None)
-    # YOUR CODE HERE
+
+    string = ""
+    if len(s)  <= 0:
+        return string
+    current = self.root
+    for i in range(len(s)):
+
+        if s[i] == "0":
+            current = current.left
+        if s[i] == "1":
+            current = current.right
+
+        if current.left == None and current.right == None and current.symbol!=None:
+            string = string + current.symbol
+            current = self.root
+        
+    if len(string) == 0:
+        string = None
+    elif self.encode(string)!= s:
+        string = None
+
+
+    return string
+
 
 '''
-l = "Tie-break 1;C,B,A;2,1,3;(C(AB));ABC;10110;010;CA"
+l = "Tie-break 1;C,B,A;1,1,1;(C(AB));ABC;10110;010;CA"
 l = l.strip()
 (testname, symbols, weights, tree, encode_input, encode_output, decode_input, decode_output) = l.split(";")
 decode_output = None if decode_output == '!' else decode_output
@@ -119,16 +167,24 @@ print(h.root.symbol)
 print("Right Child Symbol:")
 print(h.root.right.symbol)
 print("Right Child's Left Child:")
-print(h.root.right.left)
+print(h.root.right.left.symbol)
 print("Right Child's Right Child:")
-print(h.root.right.right)
+print(h.root.right.right.symbol)
 print("Left Child Symbol:")
 print(h.root.left.symbol)
-print("Left Child's Left Child Symbol:")
-print(h.root.left.left.symbol)
-print("Left Child's Right Child Symbol:")
-print(h.root.left.right.symbol)
 
+print ("encoding: " + str(encode_input))
+print (h.encode(encode_input) == encode_output)
+print ("to: " + str(encode_output))
+
+print ("decoding: " + str(decode_input))
+print (h.decode(decode_input) == decode_output)
+print ("to: " + str(decode_output))
+#assert(h.encode(encode_input) == encode_output)
+#print("Left Child's Left Child Symbol:")
+#print(h.root.left.left.symbol)
+#print("Left Child's Right Child Symbol:")
+#print(h.root.left.right.symbol)
 
 l = "Generated case number 0;j,e,F,h,Z,x,w,Y,X,q,A,i,I,l,z,O,v,o,V,G,n,E,T,B,L;13,10,9,15,5,8,1,7,5,2,12,6,14,3,8,7,5,5,5,9,12,9,14,2,5;((((EF)(G(LV)))(((XZ)e)((ov)A)))(((n(iO))(jI))((T(Y(l(q(wB)))))(h(xz)))));;;0111000011101111010010100101111111010;AEhxiizY"
 l = l.strip()
@@ -137,4 +193,24 @@ decode_output = None if decode_output == '!' else decode_output
 symbols = symbols.split(",")
 weights = [int(w) for w in weights.split(",")]
 h = HuffmanTree(list(zip(symbols, weights)))
+
+print("Root Symbol:")
+print(h.root.symbol)
+print("Right Child Symbol:")
+print(h.root.right.symbol)
+print("Right Child's Left Child:")
+print(h.root.right.left.symbol)
+print("Right Child's Right Child:")
+print(h.root.right.right.symbol)
+print("Left Child Symbol:")
+print(h.root.left.symbol)
+
+print ("encoding: " + str(encode_input))
+print (h.encode(encode_input) == encode_output)
+print ("to: " + str(encode_output))
+
+print ("decoding: " + str(decode_input))
+print (h.decode(decode_input) == decode_output)
+print ("to: " + str(decode_output))
+
 '''
