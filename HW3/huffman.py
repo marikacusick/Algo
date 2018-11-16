@@ -116,7 +116,6 @@ class HuffmanTree:
               
     recurse_code(root, "", this_dict)
   
-    print (this_dict)
     output = ""
     for char in s:
         output = output + this_dict[char]
@@ -153,64 +152,4 @@ class HuffmanTree:
     return string
 
 
-'''
-l = "Tie-break 1;C,B,A;1,1,1;(C(AB));ABC;10110;010;CA"
-l = l.strip()
-(testname, symbols, weights, tree, encode_input, encode_output, decode_input, decode_output) = l.split(";")
-decode_output = None if decode_output == '!' else decode_output
-symbols = symbols.split(",")
-weights = [int(w) for w in weights.split(",")]
-h = HuffmanTree(list(zip(symbols, weights)))
 
-print("Root Symbol:")
-print(h.root.symbol)
-print("Right Child Symbol:")
-print(h.root.right.symbol)
-print("Right Child's Left Child:")
-print(h.root.right.left.symbol)
-print("Right Child's Right Child:")
-print(h.root.right.right.symbol)
-print("Left Child Symbol:")
-print(h.root.left.symbol)
-
-print ("encoding: " + str(encode_input))
-print (h.encode(encode_input) == encode_output)
-print ("to: " + str(encode_output))
-
-print ("decoding: " + str(decode_input))
-print (h.decode(decode_input) == decode_output)
-print ("to: " + str(decode_output))
-#assert(h.encode(encode_input) == encode_output)
-#print("Left Child's Left Child Symbol:")
-#print(h.root.left.left.symbol)
-#print("Left Child's Right Child Symbol:")
-#print(h.root.left.right.symbol)
-
-l = "Generated case number 0;j,e,F,h,Z,x,w,Y,X,q,A,i,I,l,z,O,v,o,V,G,n,E,T,B,L;13,10,9,15,5,8,1,7,5,2,12,6,14,3,8,7,5,5,5,9,12,9,14,2,5;((((EF)(G(LV)))(((XZ)e)((ov)A)))(((n(iO))(jI))((T(Y(l(q(wB)))))(h(xz)))));;;0111000011101111010010100101111111010;AEhxiizY"
-l = l.strip()
-(testname, symbols, weights, tree, encode_input, encode_output, decode_input, decode_output) = l.split(";")
-decode_output = None if decode_output == '!' else decode_output
-symbols = symbols.split(",")
-weights = [int(w) for w in weights.split(",")]
-h = HuffmanTree(list(zip(symbols, weights)))
-
-print("Root Symbol:")
-print(h.root.symbol)
-print("Right Child Symbol:")
-print(h.root.right.symbol)
-print("Right Child's Left Child:")
-print(h.root.right.left.symbol)
-print("Right Child's Right Child:")
-print(h.root.right.right.symbol)
-print("Left Child Symbol:")
-print(h.root.left.symbol)
-
-print ("encoding: " + str(encode_input))
-print (h.encode(encode_input) == encode_output)
-print ("to: " + str(encode_output))
-
-print ("decoding: " + str(decode_input))
-print (h.decode(decode_input) == decode_output)
-print ("to: " + str(decode_output))
-
-'''
