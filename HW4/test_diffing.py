@@ -89,6 +89,7 @@ with open("diffing_tests.txt", 'r') as testfile:
     for l in L:
         (testname, cost_table, s, t, expected_cost)  = l.strip().split(";")
         expected_cost = int(expected_cost)
+        print ("expected cost:" + str(expected_cost))
         # Parse the cost table
         costs = []
         for i in range(0,len(cost_table),7):
