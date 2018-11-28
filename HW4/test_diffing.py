@@ -54,7 +54,6 @@ def test_diffing(testcase):
     post_count = D.cost_functor.count
     if(post_count > pre_count):
         outputString += "diff_from_table called cost; only table-cell-filling code should do that\n"
-
     if cost != expected_cost:
         outputString += "Diffing code returned a cost of %d, but expected a cost of %d. Returned alignment was\n\t%s\n\t%s\n"%(cost, expected_cost, align_s, align_t)
         return outputString
@@ -89,7 +88,6 @@ with open("diffing_tests.txt", 'r') as testfile:
     for l in L:
         (testname, cost_table, s, t, expected_cost)  = l.strip().split(";")
         expected_cost = int(expected_cost)
-        print ("expected cost:" + str(expected_cost))
         # Parse the cost table
         costs = []
         for i in range(0,len(cost_table),7):
