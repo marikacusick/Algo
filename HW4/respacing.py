@@ -18,26 +18,28 @@ class RespaceTableCell:
 # Returns a RespaceTableCell to put at position (i,j)
 def fill_cell(T, i, j, string, is_word):
     #YOUR CODE HERE
-    return RespaceTableCell(False, None)
+    sub_string = string[i:j+1]
+    sub_string_is_word = is_word(sub_string)
 
-        
-        
-    #if (row == 0):
-     #   return RespaceTableCell(True, 0)
-    #if (row > col):
-    #    cellAbove = T.get(row-1, col)
-    #    return RespaceTableCell(cellAbove.value, cellAbove.index)
+    if sub_string_is_word:
+        return RespaceTableCell(True, None)
+    else:
+        if len(sub_string) == 1: # no way to look elsewhere
+            return RespaceTableCell(False, None)
+        else:
+            for split_point in range(i,j):
+                cell_left = T.get(i, split_point)
+                cell_below = T.get(split_point+1, j)
+                
+                if (cell_left.value and cell_below.value):
+                    return RespaceTableCell(True, split_point)
+            
+            return RespaceTableCell(False, None) #no valid splits
+
     
     
-    #if(is_word(sub_string)):
-    #    sub_string_length = len(sub_string)
-    #    whole_string_length = len(string)
-    #    jump_ahead = whole_string_length - sub_string_length
-    #    return RespaceTableCell(True, jump_ahead)
 
-    
-
-                  
+                 
 # Inputs: N, the size of the list being respaced
 # Outputs: a list of (i,j) tuples indicating the order in which the table should be filled.
 def cell_ordering(N):
@@ -70,7 +72,28 @@ def cell_ordering(N):
 # (See instructions.pdf for more on the dynamic programming skeleton)
 # Return the respaced string, or None if there is no respacing.
 def respace_from_table(s, table):
-    #YOUR CODE HERE           
+    #YOUR CODE HERE
+    #N = len(s) 
+    #i = 0
+    #j = 0
+    #start_j = 0
+    #while(True):
+        #if (start_j > N-1):
+            #break
+        #print(str(i)+","+str(j))
+        #cell = table.get(i,j)
+        #print(cell)
+        #if (j == N-1):
+            #i = 0
+            #start_j += 1
+            #j = start_j
+        #else:
+            #i += 1
+            #j += 1
+    
+    
+    top_right_cell = table.get(0,len(s)-1)
+    print(top_right_cell)
     return None
 
 
@@ -85,8 +108,8 @@ if __name__ == "__main__":
     #print respace_from_table(s, D)
     
     from dynamic_programming import DynamicProgramTable
-    s = "itwasi"
-    wordlist = ["i", "it", "was", "as", "a"]
+    s = "iamace"
+    wordlist = ["i", "a", "am", "ace"]
     D = DynamicProgramTable(len(s) + 1, len(s) + 1, cell_ordering(len(s)), fill_cell)
     print(D)
     D.fill(string=s, is_word=lambda w:w in wordlist)
