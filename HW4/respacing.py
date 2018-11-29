@@ -44,10 +44,7 @@ def fill_cell(T, i, j, string, is_word):
 # Outputs: a list of (i,j) tuples indicating the order in which the table should be filled.
 def cell_ordering(N):
     #YOUR CODE HERE
-    #Do 0,0 --> 1,1 --> 2,2 --> 3,3 --> 4,4 --> 5,5
-    # -->
     
-    print(N)
     cellOrderArr = []
     i = 0
     j = 0
@@ -65,52 +62,48 @@ def cell_ordering(N):
             j += 1
         
     
-    print(cellOrderArr)
     return cellOrderArr
 
 # Input: a filled dynamic programming table.
 # (See instructions.pdf for more on the dynamic programming skeleton)
 # Return the respaced string, or None if there is no respacing.
 def respace_from_table(s, table):
-    #YOUR CODE HERE
-    #N = len(s) 
-    #i = 0
-    #j = 0
-    #start_j = 0
-    #while(True):
-        #if (start_j > N-1):
-            #break
-        #print(str(i)+","+str(j))
-        #cell = table.get(i,j)
-        #print(cell)
-        #if (j == N-1):
-            #i = 0
-            #start_j += 1
-            #j = start_j
-        #else:
-            #i += 1
-            #j += 1
-    
-    
+    #YOUR CODE HERE       
     top_right_cell = table.get(0,len(s)-1)
-    print(top_right_cell)
-    return None
+    final_string = ""
+        
+    if not top_right_cell.value:
+        return None
+    else:
+        cur_cell = top_right_cell
+        start_column = 0
+        while(True):
+            if(cur_cell.index == None):
+                word_to_add = s[split_point + 1:len(s)]
+                final_string += word_to_add
+                return final_string
+            split_point = cur_cell.index
+            word_to_add = s[start_column:split_point+1]
+            final_string += (word_to_add + " ")
+            
+            start_column = split_point + 1
+            cur_cell = table.get(split_point + 1, len(s) - 1)
+            
 
 
 if __name__ == "__main__":
     # Example usage.
+    from dynamic_programming import DynamicProgramTable
+    s = "itwasthebestoftimes"
+    wordlist = ["of", "it", "the", "best", "times", "was"]
+    D = DynamicProgramTable(len(s) + 1, len(s) + 1, cell_ordering(len(s)), fill_cell)
+    D.fill(string=s, is_word=lambda w:w in wordlist)
+    print respace_from_table(s, D)
+    
     #from dynamic_programming import DynamicProgramTable
-    #s = "itwasthebestoftimes"
-    #wordlist = ["of", "it", "the", "best", "times", "was"]
+    #s = "iamace"
+    #wordlist = ["i", "a", "am", "ace"]
     #D = DynamicProgramTable(len(s) + 1, len(s) + 1, cell_ordering(len(s)), fill_cell)
     #print(D)
     #D.fill(string=s, is_word=lambda w:w in wordlist)
     #print respace_from_table(s, D)
-    
-    from dynamic_programming import DynamicProgramTable
-    s = "iamace"
-    wordlist = ["i", "a", "am", "ace"]
-    D = DynamicProgramTable(len(s) + 1, len(s) + 1, cell_ordering(len(s)), fill_cell)
-    print(D)
-    D.fill(string=s, is_word=lambda w:w in wordlist)
-    print respace_from_table(s, D)
